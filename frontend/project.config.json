@@ -1,9 +1,13 @@
 {
+  "appid": "wxbe11c046d32f0c03",
+  "compileType": "miniprogram",
+  "libVersion": "3.15.1",
+  "projectname": "homework-frontend",
   "setting": {
     "es6": true,
     "postcss": true,
     "minified": true,
-    "uglifyFileName": false,
+    "uglifyFileName": true,
     "enhance": true,
     "packNpmRelationList": [],
     "babelSetting": {
@@ -23,13 +27,10 @@
     "swc": false,
     "disableSWC": true
   },
-  "compileType": "miniprogram",
   "simulatorPluginLibVersion": {},
   "packOptions": {
     "ignore": [],
     "include": []
   },
-  "appid": "wxbe11c046d32f0c03",
-  "editorSetting": {},
-  "libVersion": "3.15.1"
+  "editorSetting": {}
 }

@@ -35,12 +35,6 @@ function openPage(url) {
     return
   }
 
-  const pages = typeof getCurrentPages === 'function' ? getCurrentPages() : []
-  if (pages.length >= 2) {
-    wx.redirectTo({ url: normalized })
-    return
-  }
-
   wx.navigateTo({ url: normalized })
 }
 

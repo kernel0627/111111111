@@ -20,6 +20,8 @@ Desktop.ini
 # WeChat DevTools local-only config
 project.private.config.json
 project.private.config.*.json
+frontend/project.private.config.json
+frontend/project.private.config.*.json
 
 # Local env / secrets
 .env
@@ -36,6 +38,7 @@ admin-web/.env.*.local
 node_modules/
 admin-web/node_modules/
 miniprogram_npm/
+frontend/miniprogram_npm/
 dist/
 build/
 out/
@@ -75,6 +78,7 @@ backend-model/*
 # Build outputs / binaries
 bin/
 backend/bin/
+frontend/dist/
 *.exe
 *.dll
 *.so

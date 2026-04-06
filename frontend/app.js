@@ -47,16 +47,6 @@ App({
         })
       }
 
-      const pages = typeof getCurrentPages === 'function' ? getCurrentPages() : []
-      if (pages.length >= 2) {
-        return wx.redirectTo({
-          url: target,
-          success: opts.success,
-          fail: opts.fail,
-          complete: opts.complete,
-        })
-      }
-
       return rawNavigateTo.call(wx, opts)
     }
 
@@ -77,9 +67,9 @@ App({
 
     const rawNavigateBack = wx.navigateBack
     wx.navigateBack = function(options) {
+      const opts = options || {}
       const pages = typeof getCurrentPages === 'function' ? getCurrentPages() : []
-      if (pages.length <= 2) {
-        const opts = options || {}
+      if (pages.length > 3) {
         return wx.switchTab({
           url: getCurrentTabRoot(),
           success: opts.success,
@@ -87,7 +77,15 @@ App({
           complete: opts.complete,
         })
       }
-      return rawNavigateBack.call(wx, options)
+      if (pages.length <= 1) {
+        return wx.switchTab({
+          url: getCurrentTabRoot(),
+          success: opts.success,
+          fail: opts.fail,
+          complete: opts.complete,
+        })
+      }
+      return rawNavigateBack.call(wx, opts)
     }
 
     wx.__zgbeNavPatched = true

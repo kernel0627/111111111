@@ -2,32 +2,32 @@
   <scroll-view scroll-y class="page">
     <view class="section">
       <view class="field-label">活动标题</view>
-      <input class="field-input {{errors.title ? 'error' : ''}}" value="{{title}}" placeholder="请输入活动标题" bindinput="onTitleInput" />
+      <input class="field-input {{errors.title ? 'error' : ''}}" value="{{title}}" placeholder="输入一个清晰的活动标题" bindinput="onTitleInput" />
       <view wx:if="{{errors.title}}" class="error-tip">{{errors.title}}</view>
     </view>
 
     <view class="section">
       <view class="field-label">活动描述</view>
-      <textarea class="field-textarea" value="{{description}}" placeholder="请输入活动描述" bindinput="onDescriptionInput" maxlength="500" />
+      <textarea class="field-textarea" value="{{description}}" placeholder="简单介绍活动内容、要求和注意事项" bindinput="onDescriptionInput" maxlength="500" />
     </view>
 
     <view class="section">
-      <view class="field-label">活动类型</view>
+      <view class="field-label">活动分类</view>
       <view class="picker-cell {{errors.category ? 'error' : ''}}" bindtap="onCategoryClick">
-        <text class="picker-value">{{category || '请选择类型'}}</text>
+        <text class="picker-value">{{category || '请选择活动分类'}}</text>
         <text class="picker-arrow">></text>
       </view>
       <view wx:if="{{errors.category}}" class="error-tip">{{errors.category}}</view>
     </view>
 
     <view class="section" wx:if="{{category}}">
-      <view class="field-label">活动标签</view>
+      <view class="field-label">细分标签</view>
       <block wx:if="{{showTagManualInput}}">
-        <input class="field-input {{errors.subCategory ? 'error' : ''}}" value="{{subCategory}}" placeholder="请输入标签" bindinput="onTagManualInput" />
+        <input class="field-input {{errors.subCategory ? 'error' : ''}}" value="{{subCategory}}" placeholder="请输入细分标签" bindinput="onTagManualInput" />
       </block>
       <block wx:else>
         <view class="picker-cell {{errors.subCategory ? 'error' : ''}}" bindtap="onTagClick">
-          <text class="picker-value">{{subCategory || '请选择标签'}}</text>
+          <text class="picker-value">{{subCategory || '请选择细分标签'}}</text>
           <text class="picker-arrow">></text>
         </view>
       </block>
@@ -37,20 +37,20 @@
     <view class="section">
       <view class="section-title">活动时间</view>
       <radio-group class="radio-group" bindchange="onTimeModeChange">
-        <label class="radio-item"><radio value="range" checked="{{timeMode === 'range'}}" /><text>时间范围</text></label>
+        <label class="radio-item"><radio value="range" checked="{{timeMode === 'range'}}" /><text>最近几天内</text></label>
         <label class="radio-item"><radio value="fixed" checked="{{timeMode === 'fixed'}}" /><text>固定时间</text></label>
       </radio-group>
       <block wx:if="{{timeMode === 'range'}}">
         <view class="stepper-row">
-          <text class="stepper-label">未来</text>
+          <text class="stepper-label">天数</text>
           <input class="stepper-input" type="number" value="{{timeRange}}" bindinput="onTimeRangeInput" />
-          <text class="stepper-unit">天内</text>
+          <text class="stepper-unit">天</text>
         </view>
         <view wx:if="{{errors.timeRange}}" class="error-tip">{{errors.timeRange}}</view>
       </block>
       <block wx:if="{{timeMode === 'fixed'}}">
         <view class="picker-cell {{errors.fixedTime ? 'error' : ''}}" bindtap="onFixedTimeClick">
-          <text class="picker-value">{{fixedTimeDisplay || '请选择日期和时间'}}</text>
+          <text class="picker-value">{{fixedTimeDisplay || '请选择活动时间'}}</text>
           <text class="picker-arrow">></text>
         </view>
         <view wx:if="{{errors.fixedTime}}" class="error-tip">{{errors.fixedTime}}</view>
@@ -65,8 +65,8 @@
       </radio-group>
       <block wx:if="{{locationMode === 'current'}}">
         <view class="location-row">
-          <text class="location-text">{{locationText || '定位中...'}}</text>
-          <button class="btn-small" bindtap="onGetCurrentLocation">刷新</button>
+          <text class="location-text">{{locationText || '还没有获取位置'}}</text>
+          <button class="btn-small" bindtap="onGetCurrentLocation">重新获取</button>
         </view>
       </block>
       <block wx:if="{{locationMode === 'manual'}}">
@@ -85,15 +85,24 @@
     </view>
   </scroll-view>
 
-  <view class="submit-wrap"><button class="btn-primary" bindtap="onSubmit" loading="{{submitting}}">发布活动</button></view>
+  <view class="submit-wrap">
+    <button class="btn-primary" bindtap="onSubmit" loading="{{submitting}}">发布活动</button>
+  </view>
 </view>
 
-<auth-required wx:if="{{!isLoggedIn && !showLoginModal}}" title="该功能需要登录后使用" buttonText="去登录" bind:login="onLoginTap" />
+<view class="page-shell" wx:if="{{!isLoggedIn && !showLoginModal}}">
+  <view class="surface-card empty-state post-auth-card">
+    <view class="empty-state__icon">发</view>
+    <view class="empty-state__title">登录后发布活动</view>
+    <view class="empty-state__desc">登录后就能发起活动、设置时间地点，并邀请大家一起参与。</view>
+    <button class="primary-btn login-entry" bindtap="onLoginTap">去登录 / 注册</button>
+  </view>
+</view>
 
 <login-modal
   visible="{{showLoginModal}}"
-  title="登录方式"
-  tip="该功能需要登录后使用"
+  title="登录后继续发布"
+  tip="登录后就能继续填写活动内容、设置时间地点并完成发布。"
   bind:close="onLoginModalClose"
   bind:wechat="onWechatLogin"
   bind:password="onPasswordLogin"
@@ -104,7 +113,7 @@
   <view class="modal-mask" bindtap="onCategoryModalClose"></view>
   <view class="modal-dialog">
     <view class="modal-header">
-      <text class="modal-title">选择类型</text>
+      <text class="modal-title">选择活动分类</text>
       <text class="modal-close" bindtap="onCategoryModalClose">×</text>
     </view>
     <view class="modal-body">
@@ -119,7 +128,7 @@
   <view class="modal-mask" bindtap="onTagModalClose"></view>
   <view class="modal-dialog">
     <view class="modal-header">
-      <text class="modal-title">选择标签</text>
+      <text class="modal-title">选择细分标签</text>
       <text class="modal-close" bindtap="onTagModalClose">×</text>
     </view>
     <view class="modal-body">
@@ -134,7 +143,7 @@
   <view class="modal-mask" bindtap="onDateModalClose"></view>
   <view class="modal-dialog">
     <view class="modal-header">
-      <text class="modal-title">选择日期时间</text>
+      <text class="modal-title">选择活动时间</text>
       <text class="modal-close" bindtap="onDateModalClose">×</text>
     </view>
     <view class="modal-body">
