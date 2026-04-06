@@ -1,0 +1,24 @@
+# Backend-local runtime and cache files
+.gocache/
+.gomodcache/
+data/
+logs/
+.server.pid
+__pycache__/
+*.pyc
+backend-server
+backend-server.exe
+server.log
+server.err
+server.out
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.log
+*.err
+*.out
+*.pid
+*.test
+coverage.out

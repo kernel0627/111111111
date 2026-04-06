@@ -1,0 +1,71 @@
+<view class="page-shell" wx:if="{{isLoggedIn}}">
+  <view class="surface-card hero-card chat-hero">
+    <view class="chat-hero__title">群聊消息</view>
+    <view class="chat-hero__desc">这里集中展示你发起和参与活动的群聊摘要，直接点进卡片就能继续聊天。</view>
+  </view>
+
+  <view class="surface-card section-block tabs-card">
+    <view class="tabs-nav">
+      <view class="tabs-nav__item {{activeTab===0?'tabs-nav__item--active':''}}" data-index="0" bindtap="onTabTap">我发起的群聊</view>
+      <view class="tabs-nav__item {{activeTab===1?'tabs-nav__item--active':''}}" data-index="1" bindtap="onTabTap">我参加的群聊</view>
+    </view>
+  </view>
+
+  <view class="card-list section-block">
+    <block wx:if="{{activeTab===0}}">
+      <view class="surface-card chat-item" wx:for="{{initiatedList}}" wx:key="id" data-id="{{item.id}}" data-title="{{item.title}}" bindtap="onItemTap">
+        <image class="avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+        <view class="info">
+          <view class="title-row">
+            <view class="title">{{item.title}}</view>
+            <view class="inline-pill inline-pill--{{item.statusTone}}">{{item.statusText}}</view>
+          </view>
+          <view class="last-msg">{{item.senderName ? item.senderName + '：' : ''}}{{item.lastMessage}}</view>
+        </view>
+        <view class="time">{{item.lastTime}}</view>
+      </view>
+      <view wx:if="{{!initiatedList.length}}" class="empty-state surface-card">
+        <view class="empty-state__icon">聊</view>
+        <view class="empty-state__title">还没有发起中的群聊</view>
+        <view class="empty-state__desc">你发起活动并产生聊天后，这里会自动出现最新摘要。</view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="surface-card chat-item" wx:for="{{joinedList}}" wx:key="id" data-id="{{item.id}}" data-title="{{item.title}}" bindtap="onItemTap">
+        <image class="avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+        <view class="info">
+          <view class="title-row">
+            <view class="title">{{item.title}}</view>
+            <view class="inline-pill inline-pill--{{item.statusTone}}">{{item.statusText}}</view>
+          </view>
+          <view class="last-msg">{{item.senderName ? item.senderName + '：' : ''}}{{item.lastMessage}}</view>
+        </view>
+        <view class="time">{{item.lastTime}}</view>
+      </view>
+      <view wx:if="{{!joinedList.length}}" class="empty-state surface-card">
+        <view class="empty-state__icon">空</view>
+        <view class="empty-state__title">还没有参加中的群聊</view>
+        <view class="empty-state__desc">参加活动并开启交流后，聊天摘要会显示在这里。</view>
+      </view>
+    </block>
+  </view>
+</view>
+
+<view class="page-shell" wx:if="{{!isLoggedIn && !showLoginModal}}">
+  <view class="surface-card empty-state chat-auth-card">
+    <view class="empty-state__icon">登</view>
+    <view class="empty-state__title">登录后查看你的群聊消息</view>
+    <view class="empty-state__desc">登录后可以查看我发起和我参加的群聊摘要，也能继续进入群聊发送消息。</view>
+    <button class="primary-btn login-entry" bindtap="onLoginTap">去登录 / 注册</button>
+  </view>
+</view>
+
+<login-modal
+  visible="{{showLoginModal}}"
+  title="登录后继续"
+  tip="登录后可以查看你的群聊消息和活动交流记录。"
+  bind:close="onLoginModalClose"
+  bind:wechat="onWechatLogin"
+  bind:password="onPasswordLogin"
+  bind:register="onRegister"
+/>

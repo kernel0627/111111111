@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "聊天室",
+  "usingComponents": {
+    "login-modal": "/components/login-modal/index",
+    "auth-required": "/components/auth-required/index"
+  }
+}

@@ -1,0 +1,101 @@
+# ------------------------------
+# Repository source only
+# Ignore local runtime state, caches, build outputs, and private configs
+# ------------------------------
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*.tmp
+*.temp
+
+# IDE / workspace
+.vscode/
+.idea/
+.kiro/
+
+# WeChat DevTools local-only config
+project.private.config.json
+project.private.config.*.json
+
+# Local env / secrets
+.env
+.env.local
+.env.*.local
+backend/.env
+backend/.env.local
+backend/.env.*.local
+admin-web/.env
+admin-web/.env.local
+admin-web/.env.*.local
+
+# Node / mini program dependencies and outputs
+node_modules/
+admin-web/node_modules/
+miniprogram_npm/
+dist/
+build/
+out/
+admin-web/dist/
+admin-web/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python / recommender caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+backend/recommender/.venv/
+
+# Go caches / temp / coverage
+.gocache/
+backend/.gocache/
+.gomodcache/
+backend/.gomodcache/
+coverage/
+coverage.out
+*.coverprofile
+*.test
+
+# Local model and tool caches
+.hf/
+backend-model/*
+!backend-model/README.md
+
+# Build outputs / binaries
+bin/
+backend/bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Runtime logs / pids / temp outputs
+.pids/
+*.log
+*.err
+*.out
+*.pid
+backend/.server.pid
+backend/server.log
+backend/server.err
+backend/server.out
+backend/logs/
+
+# Local database / state
+backend/data/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
